@@ -1,7 +1,7 @@
 class Jogo {
     constructor(){
         this.corredor = guara;
-        this.pontuacao = Pontuacao();
+        this.pontuacao = new Pontuacao();
         this.vidasConsumidas = 0;
         this.iniciado = true;
     }
@@ -14,5 +14,5 @@ class Jogo {
     }
 }
 
-jogo = Jogo();
+jogo = new Jogo();
 jogo.comecar;

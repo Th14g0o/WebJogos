@@ -17,7 +17,7 @@ class Corredor {
 
 // 1. Guara
 const caminhoBaseCorreGuara = '/jogos/corre-guara/sprites/'
-guara = Corredor('Guará');
+guara = new Corredor('Guará');
 
 // 1.1 Sprite Correndo
 for (let i = 1; i <= 0; i++)
