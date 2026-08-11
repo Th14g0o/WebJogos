@@ -4,15 +4,24 @@ class Jogo {
         this.pontuacao = new Pontuacao();
         this.vidasConsumidas = 0;
         this.iniciado = true;
+        this.correGuara = document.getElementById('corre-guara');
     }
     comecar(){
-        const personagemImg = document.getElementById('personagem');
-        while (this.iniciado){
-            this.corredor.animar();
-            personagemImg.src = this.corredor.spriteSheet[Math.trunc(this.corredor.frameAtual)];
-        }
+        this.correGuara.appendChild(this.pontuacao.tag);
+        this.correGuara.appendChild(this.corredor.tagImg);
+
+        document.addEventListener("keydown", (evento) => {
+            if (evento.code === "Space") {
+                this.corredor.pular();
+            }
+        });
+
+        setInterval(() => {
+            this.corredor.atualizarEstado();
+            this.pontuacao.contando();
+        }, 0);
     }
 }
 
 jogo = new Jogo();
-jogo.comecar;
+jogo.comecar();
