@@ -1,8 +1,11 @@
-function verificarColisao(corredor, obstaculoImg) {
+function verificarColisao(corredor, obstaculo) {
     const corredorImg = corredor.tagImg.getBoundingClientRect();
-    const obstaculo = obstaculoImg.getBoundingClientRect();
-    if (corredorImg.x < obstaculo.x + obstaculo.width  && corredorImg.x + corredorImg.width > obstaculo.x &&
-        corredorImg.y < obstaculo.y + obstaculo.height && corredorImg.y + corredorImg.height > obstaculo.y) {
-        console.log("COLISÃO!");
+    const obstaculoImg = obstaculo.tag.getBoundingClientRect();
+
+    if (corredorImg.x < obstaculoImg.x + obstaculoImg.width - corredor.fatorColisaoX && corredorImg.x + corredorImg.width - corredor.fatorColisaoX > obstaculoImg.x 
+        && corredorImg.y < obstaculoImg.y + obstaculoImg.height - corredor.fatorColisaoY && corredorImg.y + corredorImg.height - corredor.fatorColisaoY > obstaculoImg.y) {
+        // alert("Colisão detectada!");
+        return true;
     }
+    return false;
 }

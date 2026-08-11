@@ -19,24 +19,35 @@ class Corredor {
         this.prepararExibicao();
 
         this.posicao = this.tagImg.getBoundingClientRect();
+
+        this.fatorColisaoX = 35;
+        this.fatorColisaoY = 0;
+    }
+
+    reiniciar(){
+        this.estado = estado.correndo;
+        this.prepararExibicao();
+        this.posicao = this.tagImg.getBoundingClientRect();
+        this.vidas = 1;
+        this.frameAtual = 0;
     }
 
     prepararExibicao(){
         this.tagImg.style.display = 'block';
         this.tagImg.style.width = '100px';
         this.tagImg.style.position = 'absolute';
-        this.tagImg.style.top = '50%';
-        this.tagImg.style.left = '0px';
-        this.tagImg.style.transition = "top 0.5s ease";
+        this.tagImg.style.bottom = '0';
+        this.tagImg.style.left = '0';
+        this.tagImg.style.transition = "bottom 0.5s ease";
 
     }
 
     pular(){
         if (this.estado != estado.pulando){
             this.estado = estado.pulando;
-            this.tagImg.style.top = '30%';
+            this.tagImg.style.bottom = '175px';
             setTimeout(() => {
-                this.tagImg.style.top = '50%';
+                this.tagImg.style.bottom = '0';
                 setTimeout(() => {
                     this.estado = estado.correndo;
                 }, 500);
@@ -60,10 +71,6 @@ class Corredor {
     atualizarEstado(){
         this.posicao = this.tagImg.getBoundingClientRect();
         this.animar();
-        // console.log("X:", this.posicao.x);
-        // console.log("Y:", this.posicao.y);
-        // console.log("Largura:", this.posicao.width);
-        // console.log("Altura:", this.posicao.height);
     }
 
 }

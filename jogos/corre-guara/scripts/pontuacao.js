@@ -11,7 +11,7 @@ class Pontuacao {
         this.tag.style.color = "#e2e621";
         this.tag.style.fontSize = "30px";
         this.tag.style.position = "absolute";
-        this.tag.style.top = "5%";
+        this.tag.style.top = "1%";
         this.tag.style.right = "2%";
     }
 
@@ -19,8 +19,9 @@ class Pontuacao {
         this.tag.innerHTML = "Pontuação: " + Math.trunc(this.pontos);
         this.pontos += 0.015;
     }
-    acabouJogo(){
-        if (this.pontos > this.maiorPontuacao) this.maiorPontuacao = this.pontos;
-    }
 
+    acabouJogo(){
+        if (this.pontos > this.maiorPontuacao) 
+            this.maiorPontuacao = this.pontos;
+    }
 }
