@@ -78,6 +78,3 @@ class Jogo {
         }, 0);
     }
 }
-
-jogo = new Jogo();
-jogo.comecar();
