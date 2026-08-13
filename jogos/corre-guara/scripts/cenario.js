@@ -60,7 +60,7 @@ class Solo{
         this.tag.style.position = 'absolute';
         this.tag.style.top = '90vh';
         this.tag.style.left =  (100 * this.fatorLeftInicial) + 'vw';
-        this.tag.style.zIndex = (this.nivel * -1) + '';
+        this.tag.style.zIndex = '0';
         this.tag.src = this.imagem;
         this.posicao = this.tag.getBoundingClientRect();
     }

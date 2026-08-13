@@ -9,8 +9,6 @@ function preloadImages(urls) {
 window.addEventListener("load", () => {
     // Hide scrollbar but allow scroll
     document.body.style.overflow = 'hidden'; // disables scroll
-    // To allow scroll without showing scrollbar:
-    document.body.style.overflow = 'auto';
     document.body.style.scrollbarWidth = 'none'; // Firefox
     document.body.style.msOverflowStyle = 'none'; // IE/Edge
 
