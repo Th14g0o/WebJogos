@@ -20,6 +20,10 @@ window.addEventListener("load", () => {
         'sprites/tronco/tronco-menor.png',
         'sprites/tronco/tronco-medio.png',
         'sprites/tronco/tronco-grande.png',
+        'sprites/fundo/floresta-entardecer/floresta-entardecer-atras.png',
+        'sprites/fundo/floresta-entardecer/floresta-entardecer-meio.png',
+        'sprites/fundo/floresta-entardecer/floresta-entardecer-frente.png',
+        'sprites/fundo/floresta-entardecer/floresta-entardecer-fundo.png',
     ];
 
     preloadImages(imagens).then(() => {

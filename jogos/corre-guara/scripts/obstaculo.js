@@ -20,6 +20,7 @@ class Obstaculo {
         this.tag.style.bottom = '0px';
         this.tag.style.right = '0';
         this.tag.style.transition = "bottom 0.5s ease";
+        this.tag.style.zIndex = "2";
     }
 
     animar(){
@@ -43,7 +44,6 @@ class Obstaculo {
     atualizarEstado(){
         this.movendoEsquerda();
         this.posicao = this.tag.getBoundingClientRect();
-        console.log("velocidade:", this.velocidadeMovimento);
     }
 
     posicionarSprite(){

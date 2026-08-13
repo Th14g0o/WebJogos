@@ -4,7 +4,6 @@ const estado = {
     caindo: 2,
 }
 
-
 class Corredor {
     constructor(nome){
         this.nome = nome;
@@ -15,10 +14,10 @@ class Corredor {
 
         this.estado = estado.correndo;
 
-        this.tagImg = document.createElement("img");
+        this.tag = document.createElement("img");
         this.prepararExibicao();
 
-        this.posicao = this.tagImg.getBoundingClientRect();
+        this.posicao = this.tag.getBoundingClientRect();
 
         this.fatorColisaoX = 35;
         this.fatorColisaoY = 0;
@@ -27,27 +26,27 @@ class Corredor {
     reiniciar(){
         this.estado = estado.correndo;
         this.prepararExibicao();
-        this.posicao = this.tagImg.getBoundingClientRect();
+        this.posicao = this.tag.getBoundingClientRect();
         this.vidas = 1;
         this.frameAtual = 0;
     }
 
     prepararExibicao(){
-        this.tagImg.style.display = 'block';
-        this.tagImg.style.width = '100px';
-        this.tagImg.style.position = 'absolute';
-        this.tagImg.style.bottom = '0';
-        this.tagImg.style.left = '0';
-        this.tagImg.style.transition = "bottom 0.5s ease";
-
+        this.tag.style.display = 'block';
+        this.tag.style.width = '100px';
+        this.tag.style.position = 'absolute';
+        this.tag.style.bottom = '0';
+        this.tag.style.left = '0';
+        this.tag.style.transition = "bottom 0.5s ease";
+        this.tag.style.zIndex = "1";
     }
 
     pular(){
         if (this.estado != estado.pulando){
             this.estado = estado.pulando;
-            this.tagImg.style.bottom = '175px';
+            this.tag.style.bottom = '175px';
             setTimeout(() => {
-                this.tagImg.style.bottom = '0';
+                this.tag.style.bottom = '0';
                 setTimeout(() => {
                     this.estado = estado.correndo;
                 }, 500);
@@ -61,7 +60,7 @@ class Corredor {
     
     animar(){
         this.frameAtual = (this.frameAtual + this.velocidadeAnima) % this.spriteSheet.length;
-        this.tagImg.src = this.sprite(); 
+        this.tag.src = this.sprite(); 
     }
 
     sprite(){
@@ -69,7 +68,7 @@ class Corredor {
     }
 
     atualizarEstado(){
-        this.posicao = this.tagImg.getBoundingClientRect();
+        this.posicao = this.tag.getBoundingClientRect();
         this.animar();
     }
 

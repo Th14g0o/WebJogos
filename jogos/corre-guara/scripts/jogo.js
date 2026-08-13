@@ -6,6 +6,7 @@ class Jogo {
         this.iniciado = true;
         this.correGuara = document.getElementById('corre-guara');
         this.obstaculos = [];
+        this.cenario = criarCenarioFlorestaEntardecer();
     }
 
     adicionarObstaculo(){
@@ -21,7 +22,8 @@ class Jogo {
             this.obstaculos.splice(i, 1); 
         }
         this.correGuara.removeChild(this.pontuacao.tag);
-        this.correGuara.removeChild(this.corredor.tagImg);
+        this.correGuara.removeChild(this.corredor.tag);
+        this.cenario.removeDoPai(this.correGuara);
         this.correGuara.innerHTML = '';
         this.iniciado = true; 
         this.corredor.reiniciar();
@@ -32,12 +34,14 @@ class Jogo {
 
     inicio(){
         this.correGuara.appendChild(this.pontuacao.tag);
-        this.correGuara.appendChild(this.corredor.tagImg);
+        this.correGuara.appendChild(this.corredor.tag);
+        this.cenario.adicionarAoPai(this.correGuara);
         this.adicionarObstaculo();
     }
 
     jogo(){
         this.corredor.atualizarEstado();
+        this.cenario.atualizarEstado();
         this.pontuacao.contando();
         for (let i = 0; i < this.obstaculos.length; i++) {
             this.obstaculos[i].atualizarEstado();

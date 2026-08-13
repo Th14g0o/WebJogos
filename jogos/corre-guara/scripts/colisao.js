@@ -1,5 +1,5 @@
 function verificarColisao(corredor, obstaculo) {
-    const corredorImg = corredor.tagImg.getBoundingClientRect();
+    const corredorImg = corredor.tag.getBoundingClientRect();
     const obstaculoImg = obstaculo.tag.getBoundingClientRect();
 
     if (corredorImg.x < obstaculoImg.x + obstaculoImg.width - corredor.fatorColisaoX && corredorImg.x + corredorImg.width - corredor.fatorColisaoX > obstaculoImg.x 
