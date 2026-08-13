@@ -16,10 +16,9 @@ class Obstaculo {
     prepararExibicao(){
         this.tag.style.position = 'absolute';
         this.tag.style.display = 'block';
-        this.tag.style.width = '70px';
+        this.tag.style.width = '90px';
         this.tag.style.bottom = '0px';
-        this.tag.style.right = '0';
-        this.tag.style.transition = "bottom 0.5s ease";
+        this.tag.style.right  = '0';
         this.tag.style.zIndex = "2";
     }
 

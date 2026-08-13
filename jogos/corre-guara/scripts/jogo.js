@@ -75,6 +75,10 @@ class Jogo {
             }
         });
 
+        document.addEventListener('pointerdown', () => {
+            this.corredor.pular();
+        });
+
         setInterval(() => {
             if (this.iniciado) {
                 this.jogo();

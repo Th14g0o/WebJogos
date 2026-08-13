@@ -7,6 +7,18 @@ function preloadImages(urls) {
 }
 
 window.addEventListener("load", () => {
+    // Hide scrollbar but allow scroll
+    document.body.style.overflow = 'hidden'; // disables scroll
+    // To allow scroll without showing scrollbar:
+    document.body.style.overflow = 'auto';
+    document.body.style.scrollbarWidth = 'none'; // Firefox
+    document.body.style.msOverflowStyle = 'none'; // IE/Edge
+
+    // For WebKit browsers
+    const style = document.createElement('style');
+    style.innerHTML = '::-webkit-scrollbar { display: none; }';
+    document.head.appendChild(style);
+
     const imagens = [
         'sprites/guara/guara-01.png',
         'sprites/guara/guara-02.png',
@@ -24,6 +36,7 @@ window.addEventListener("load", () => {
         'sprites/fundo/floresta-entardecer/floresta-entardecer-meio.png',
         'sprites/fundo/floresta-entardecer/floresta-entardecer-frente.png',
         'sprites/fundo/floresta-entardecer/floresta-entardecer-fundo.png',
+        'sprites/fundo/floresta-entardecer/floresta-entardecer-solo.png',
     ];
 
     preloadImages(imagens).then(() => {
