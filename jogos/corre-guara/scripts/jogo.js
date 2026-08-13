@@ -83,6 +83,6 @@ class Jogo {
             if (this.iniciado) {
                 this.jogo();
             }
-        }, 0);
+        }, 5);
     }
 }

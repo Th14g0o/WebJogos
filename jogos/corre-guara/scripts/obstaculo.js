@@ -6,7 +6,7 @@ class Obstaculo {
         this.tag = document.createElement("img");
         this.prepararExibicao();
         this.posicao = this.tag.getBoundingClientRect();
-        this.velocidadeMovimento = (Math.floor(Math.random() * 10) % 3 + 1) * 1.5; 
+        this.velocidadeMovimento = (Math.floor(Math.random() * 10) % 4 + 3) * 1.5; 
     }    
 
     adicionaSprite(caminho){
