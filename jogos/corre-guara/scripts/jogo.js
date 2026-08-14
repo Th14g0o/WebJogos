@@ -1,9 +1,16 @@
+const estadoJogo = {
+    INICIO: 0,
+    JOGO: 1,
+    PAUSE: 2,
+    FIM: 3,
+}
+
 class Jogo {
     constructor(){
         this.corredor = guara;
         this.pontuacao = new Pontuacao();
         this.vidasConsumidas = 0;
-        this.iniciado = true;
+        this.estado = estadoJogo.JOGO;
         this.correGuara = document.getElementById('corre-guara');
         this.obstaculos = [];
         this.cenario = criarCenarioFlorestaEntardecer();
@@ -25,14 +32,14 @@ class Jogo {
         this.correGuara.removeChild(this.corredor.tag);
         this.cenario.removeDoPai(this.correGuara);
         this.correGuara.innerHTML = '';
-        this.iniciado = true; 
         this.corredor.reiniciar();
         this.pontuacao.pontos = 0;
 
-        this.inicio();
+        this.carregarJogo();
+        this.estado = estadoJogo.JOGO;
     }
 
-    inicio(){
+    carregarJogo(){
         this.correGuara.appendChild(this.pontuacao.tag);
         this.correGuara.appendChild(this.corredor.tag);
         this.cenario.adicionarAoPai(this.correGuara);
@@ -58,7 +65,7 @@ class Jogo {
             }
 
             if (this.vidasConsumidas >= this.corredor.vidas) {
-                this.iniciado = false; 
+                this.estado = estadoJogo.FIM; 
                 this.pontuacao.acabouJogo();
                 alert("Game Over! Sua pontuação foi: " + Math.trunc(this.pontuacao.pontos) + "\nMaior pontuação: " + Math.trunc(this.pontuacao.maiorPontuacao));
                 this.reiniciarJogo();
@@ -67,7 +74,7 @@ class Jogo {
     }
 
     comecar(){
-        this.inicio();
+        this.carregarJogo();
 
         document.addEventListener("keydown", (evento) => {
             if (evento.code === "Space") {
@@ -80,7 +87,7 @@ class Jogo {
         });
 
         setInterval(() => {
-            if (this.iniciado) {
+            if (this.estado === estadoJogo.JOGO) {
                 this.jogo();
             }
         }, 5);

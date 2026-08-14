@@ -1,7 +1,32 @@
-const estado = {
-    correndo: 0,
-    pulando: 1,
-    caindo: 2,
+const estadoCorredor = {
+    CORRENDO: 0,
+    PULANDO: 1,
+    CAINDO: 2,
+    COLIDINDO: 3,
+}
+
+class Pulo{
+    constructor(alturaMaxima, velocidade){
+        this.alturaMaxima = alturaMaxima;
+        this.velocidade = velocidade;
+        this.alturaAtual = velocidade;
+    }
+
+    pular(){
+        if (this.alturaAtual <= this.alturaMaxima + this.velocidade){
+            this.alturaAtual += this.velocidade;
+            return this.velocidade;
+        }
+        return 0;
+    }
+
+    cair(){
+        if (this.alturaAtual >= -this.velocidade){
+            this.alturaAtual -= this.velocidade;
+            return this.velocidade;
+        }
+        return 0;
+    }
 }
 
 class Corredor {
@@ -11,8 +36,10 @@ class Corredor {
         this.vidas = 1;
         this.frameAtual = 0;
         this.velocidadeAnima = 0.05;
+        
+        this.pulo = new Pulo(180, 3);
 
-        this.estado = estado.correndo;
+        this.estado = estadoCorredor.CORRENDO;
 
         this.tag = document.createElement("img");
         this.prepararExibicao();
@@ -24,7 +51,9 @@ class Corredor {
     }
 
     reiniciar(){
-        this.estado = estado.correndo;
+        this.estado = estadoCorredor.CORRENDO;
+        this.tag = document.createElement("img");
+        this.pulo = new Pulo(180, 3);
         this.prepararExibicao();
         this.posicao = this.tag.getBoundingClientRect();
         this.vidas = 1;
@@ -37,20 +66,12 @@ class Corredor {
         this.tag.style.position = 'absolute';
         this.tag.style.bottom = '0';
         this.tag.style.left = '0';
-        this.tag.style.transition = "bottom 0.5s ease";
         this.tag.style.zIndex = "1";
     }
 
     pular(){
-        if (this.estado != estado.pulando){
-            this.estado = estado.pulando;
-            this.tag.style.bottom = '175px';
-            setTimeout(() => {
-                this.tag.style.bottom = '0';
-                setTimeout(() => {
-                    this.estado = estado.correndo;
-                }, 500);
-            }, 500);
+        if (![estadoCorredor.PULANDO, estadoCorredor.CAINDO].includes(this.estado)) {
+            this.estado = estadoCorredor.PULANDO;
         }
     }
 
@@ -69,6 +90,22 @@ class Corredor {
 
     atualizarEstado(){
         this.posicao = this.tag.getBoundingClientRect();
+
+        if (this.estado == estadoCorredor.PULANDO){
+            const velocidadePulo = this.pulo.pular();
+            this.tag.style.top = (this.posicao.y - velocidadePulo) + "px";
+            if (velocidadePulo == 0) {
+                this.estado = estadoCorredor.CAINDO;
+            }
+        }
+        else if (this.estado == estadoCorredor.CAINDO){
+            const velocidadePulo = this.pulo.cair();
+            this.tag.style.top = (this.posicao.y + velocidadePulo) + "px";
+            if (velocidadePulo == 0) {
+                this.estado = estadoCorredor.CORRENDO;
+            }
+        }
+
         this.animar();
     }
 
