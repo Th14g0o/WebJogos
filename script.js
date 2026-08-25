@@ -6,13 +6,14 @@ class Acao{
 }
 
 class Jogo{
-    constructor(numero, nome, genero, descricao, link){
+    constructor(numero, nome, genero, descricao, link, capa){
         this.numero = numero;
         this.nome = nome;
         this.genero = genero;
         this.descricao = descricao;
         this.link = link;
         this.acoes = [];
+        this.capa = capa;
     }
 
     adicionarAcao(acao){
@@ -24,7 +25,7 @@ class ListaJogos{
     constructor(){
         this.jogos = [];
         this.tagListaJogos = document.getElementById('gameList');
-        this.tagPreviewCode = document.getElementById('preview-code');
+        this.tagPreviewScreen = document.getElementById('preview-screen');
         this.tagPreviewTitle = document.getElementById('preview-title');
         this.tagPreviewDescription = document.getElementById('preview-description');
         this.tagControls = document.getElementById('controls');
@@ -43,7 +44,7 @@ class ListaJogos{
     }
 
     limparDadosJogo(){
-        this.tagPreviewCode.innerHTML = "";
+        this.tagPreviewScreen.innerHTML = "";
         this.tagPreviewTitle.innerHTML = "";
         this.tagPreviewDescription.innerHTML = "";
         this.tagControls.innerHTML = "";
@@ -62,7 +63,10 @@ class ListaJogos{
         else{
             this.jogos.forEach(jogo => {
                 if (jogo.numero == numero){
-                    this.tagPreviewCode.innerHTML = jogo.numero;
+                    this.tagPreviewScreen.innerHTML = "";
+                    let img = document.createElement('img');
+                    img.src = jogo.capa;
+                    this.tagPreviewScreen.appendChild(img);
                     this.tagPreviewTitle.innerHTML = jogo.nome.toUpperCase();
                     this.tagPreviewDescription.innerHTML = jogo.descricao.toUpperCase();
                     this.tagControls.innerHTML = "";
@@ -115,7 +119,7 @@ let listaJogos = new ListaJogos();
 
 // Corre guara
 let jogo = new Jogo(1, "Corre Guara", "Runner", "Jogo inspirado no jogo do T-Rex do Google", 
-    "jogos/corre-guara/index.html"
+    "jogos/corre-guara/index.html", "imgs/capas/CorreGuara.png"
 );
 jogo.adicionarAcao(new Acao("Pular", "Barra de espaço, Esquerda do Mouse"));
 listaJogos.adicionarJogo(jogo);

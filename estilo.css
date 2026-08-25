@@ -320,6 +320,12 @@ body {
   place-items: center;
   border: 2px solid var(--line);
   background: var(--background);
+  box-sizing: border-box;
+}
+
+.preview-screen img {
+  display: block;
+  width: 100%;
 }
 
 .preview-code {
