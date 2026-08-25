@@ -1,13 +1,76 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Seleção de Jogos</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WEB JOGOS</title>
+  <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
-    <ul>
-        <li><a href="jogos/corre-guara/index.html">Corre Guará</a></li>
-    </ul>
+  <div class="background background-glow"></div>
+  <div class="background background-lines"></div>
+  <div class="background background-scan"></div>
+  <div class="background background-flicker"></div>
+
+  <main class="launcher">
+    <header class="header rise">
+      <div class="brand">
+        <span class="logo">WJ</span>
+        <div>
+          <p class="pixel brand-name">THIAGO GONSALVES DA SILVA</p>
+          <p class="mono muted brand-version">Só pa ri</p>
+        </div>
+      </div>
+      <div class="credits">
+        <p class="mono muted">CREDITOS</p>
+        <p class="pixel gold">++999</p>
+      </div>
+    </header>
+
+    <div class="content">
+      <section class="library">
+        <div class="library-heading rise">
+          <p class="pixel primary eyebrow">SELECIONE UM JOGO</p>
+          <h1 class="pixel title">WEB JOGOS</h1>
+          <p class="screen muted loaded"><span id="qtd-jogos">0</span> JOGOS CARREGADOS</p>
+        </div>
+
+        <div class="game-list" id="gameList">
+        </div>
+
+        <div class="hints">
+          <p class="mono muted">↑ ↓ NAVEGAR</p>
+        </div>
+      </section>
+
+      <aside class="preview rise">
+        <div class="preview-top">
+          <p class="pixel primary preview-label">DADOS DO JOGO</p>
+          <div class="preview-screen">
+            <span id="preview-code" class="preview-code"></span>
+          </div>
+          <h2 id="preview-title" class="pixel preview-title"></h2>
+        </div>
+
+        <div class="preview-description">
+          <p id="preview-description" class="screen muted">
+          </p>
+        </div>
+
+        <div class="preview-controls">
+          <p class="mono muted controls-label">CONTROLES</p>
+          <div id="controls">
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <footer class="footer rise">
+      <p class="pixel muted">INSIRA UMA MOEDA PARA CONTINUAR</p>
+      <p class="mono muted">WEB JOGOS</p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>

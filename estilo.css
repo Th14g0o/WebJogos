@@ -1,0 +1,556 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Press+Start+2P&family=Silkscreen&display=swap');
+
+:root {
+  --background: #05080b;
+  --foreground: #d3ffea;
+  --muted: #578074;
+  --primary: #35f0a6;
+  --gold: #ffd23f;
+  --cyan: #49d8ff;
+  --panel: #0b1512;
+  --line: #1d3831;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-color: var(--line);
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) var(--panel);
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--panel);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 0;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--cyan);
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  overflow: hidden;
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+}
+
+.background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.background-glow {
+  background: radial-gradient(ellipse at center,
+      rgba(53, 240, 166, 0.10),
+      transparent 62%);
+}
+
+.background-lines {
+  opacity: 0.05;
+  background: repeating-linear-gradient(0deg,
+      #fff 0px,
+      #fff 1px,
+      transparent 1px,
+      transparent 3px);
+}
+
+.background-scan {
+  background: repeating-linear-gradient(0deg,
+      transparent 0px,
+      transparent 2px,
+      rgba(0, 0, 0, 0.5) 2px,
+      rgba(0, 0, 0, 0.5) 3px);
+  animation: scan 8s linear infinite;
+}
+
+.background-flicker {
+  background: rgba(53, 240, 166, 0.05);
+  animation: flicker 3.5s steps(1, end) infinite;
+}
+
+.launcher {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1024px;
+  height: 100vh;
+  margin: 0 auto;
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pixel {
+  font-family: "Press Start 2P", monospace;
+}
+
+.screen {
+  font-family: "Silkscreen", monospace;
+}
+
+.mono {
+  font-family: "JetBrains Mono", monospace;
+}
+
+.primary {
+  color: var(--primary);
+}
+
+.gold {
+  color: var(--gold);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border: 2px solid rgba(53, 240, 166, 0.5);
+  color: var(--primary);
+  font: 10px "Press Start 2P", monospace;
+}
+
+.brand-name {
+  font-size: 10px;
+  line-height: 16px;
+  color: var(--foreground);
+}
+
+.brand-version {
+  margin-top: 4px;
+  font-size: 9px;
+}
+
+.credits {
+  text-align: right;
+}
+
+.credits p:first-child {
+  font-size: 10px;
+}
+
+.credits .gold {
+  font-size: 10px;
+  margin-top: 3px;
+}
+
+.content {
+  min-height: 0;
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 24px;
+  margin-top: 16px;
+  overflow: hidden;
+}
+
+.library {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.eyebrow {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+}
+
+.title {
+  margin-top: 16px;
+  font-size: 24px;
+  line-height: 1.25;
+  color: var(--foreground);
+}
+
+.loaded {
+  margin-top: 16px;
+  font-size: 12px;
+}
+
+.game-list {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.game-item {
+  min-width: 0;
+  max-width: calc(100% - 7px);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border: 2px solid var(--line);
+  background: rgba(11, 21, 18, 0.60);
+  color: var(--foreground);
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  animation: rise 0.5s cubic-bezier(0.32, 0.72, 0, 1) both;
+  animation-delay: "200ms";
+
+}
+
+.game-item:hover,
+.game-item.selected {
+  border-color: var(--primary);
+  background: rgba(53, 240, 166, 0.10);
+  box-shadow: 0 0 26px -4px var(--primary);
+}
+
+.game-number {
+  flex-shrink: 0;
+  color: var(--primary);
+  font: 10px "Press Start 2P", monospace;
+}
+
+.game-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 12px "Press Start 2P", monospace;
+  transition: color 0.2s;
+}
+
+.game-item.selected .game-title,
+.game-item:hover .game-title {
+  color: var(--primary);
+}
+
+.game-meta {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--muted);
+  font: 10px "JetBrains Mono", monospace;
+}
+
+.game-play {
+  flex-shrink: 0;
+  color: var(--muted);
+  font: 10px "Press Start 2P", monospace;
+  transition: color 0.2s;
+}
+
+.game-item.selected .game-play,
+.game-item:hover .game-play {
+  color: var(--gold);
+}
+
+.hints {
+  flex-shrink: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  padding-top: 16px;
+}
+
+.hints p {
+  font-size: 10px;
+}
+
+.preview {
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 2px solid var(--line);
+  background: rgba(11, 21, 18, 0.40);
+  animation-delay: 120ms;
+  overflow-y: auto;
+}
+
+.preview-top {
+  flex-shrink: 0;
+  padding: 16px;
+  border-bottom: 2px solid var(--line);
+}
+
+.preview-label {
+  font-size: 9px;
+}
+
+.preview-screen {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-top: 12px;
+  display: grid;
+  place-items: center;
+  border: 2px solid var(--line);
+  background: var(--background);
+}
+
+.preview-code {
+  color: var(--muted);
+  font: 10px "JetBrains Mono", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.preview-title {
+  margin-top: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--foreground);
+  font-size: 12px;
+}
+
+.preview-description {
+  min-height: 5em;
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.preview-description p {
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.preview-controls {
+  flex-shrink: 0;
+  padding: 16px;
+  border-top: 2px solid var(--line);
+}
+
+.controls-label {
+  font-size: 9px;
+}
+
+#controls {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.control-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.control-row>span:first-child {
+  color: rgba(211, 255, 234, 0.8);
+  font: 10px "JetBrains Mono", monospace;
+}
+
+.key {
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  color: var(--foreground);
+  font: 9px "Press Start 2P", monospace;
+  word-break: break-all;
+  line-height: 20px;
+}
+
+.footer {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 2px solid var(--line);
+  animation-delay: 360ms;
+}
+
+.footer p:first-child,
+.footer p:last-child {
+  font-size: 9px;
+}
+
+.footer p:first-child {
+  line-height: 16px;
+}
+
+.rise {
+  animation: rise 0.5s cubic-bezier(0.32, 0.72, 0, 1) both;
+}
+
+@keyframes scan {
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 0 6px;
+  }
+}
+
+@keyframes flicker {
+
+  0%,
+  92%,
+  100% {
+    opacity: 1;
+  }
+
+  94% {
+    opacity: 0.72;
+  }
+
+  96% {
+    opacity: 1;
+  }
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 900px) {
+  .content {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+
+  .game-meta {
+    display: none;
+  }
+}
+
+@media (max-width: 700px) {
+  body {
+    overflow:hidden;
+  }
+
+  .launcher {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .content {
+    grid-template-columns: 1fr;
+    overflow: visible;
+  }
+
+  .game-list {
+    max-height: 45vh;
+  }
+
+  .preview {
+    min-height: 25vh;
+    height: 25vh;
+    max-height: 75vh;
+    overflow-y: auto;
+  }
+
+  .credits {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .launcher {
+    padding: 12px;
+  }
+
+  .content {
+    gap: 16px;
+    margin-top: 12px;
+  }
+
+  .title {
+    margin-top: 10px;
+    font-size: 18px;
+  }
+
+  .loaded {
+    margin-top: 10px;
+  }
+
+  .game-list {
+    margin-top: 12px;
+  }
+
+  .game-item {
+    gap: 10px;
+    padding: 10px 12px;
+  }
+
+  .game-title {
+    font-size: 10px;
+  }
+
+  .game-play {
+    font-size: 9px;
+  }
+
+  .hints {
+    padding-top: 10px;
+    gap: 6px 14px;
+  }
+
+  .preview-top,
+  .preview-description,
+  .preview-controls {
+    padding: 12px;
+  }
+
+  .footer {
+    margin-top: 12px;
+    padding-top: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
