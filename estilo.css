@@ -470,7 +470,7 @@ body {
 
   .launcher {
     height: auto;
-    min-height: 100vh;
+    height: 100vh;
   }
 
   .content {
@@ -483,8 +483,7 @@ body {
   }
 
   .preview {
-    min-height: 25vh;
-    height: 25vh;
+    min-height: 0;
     max-height: 75vh;
     overflow-y: auto;
   }
