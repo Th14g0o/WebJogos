@@ -6,23 +6,29 @@ const estadoCorredor = {
 }
 
 class Pulo{
-    constructor(alturaMaxima, velocidade){
+    constructor(alturaMaxima, velocidade) {
         this.alturaMaxima = alturaMaxima;
         this.velocidade = velocidade;
-        this.alturaAtual = velocidade;
+        this.alturaAtual = 0;
     }
 
-    pular(){
-        if (this.alturaAtual <= this.alturaMaxima + this.velocidade){
+    pular() {
+        if (this.alturaAtual < this.alturaMaxima) {
             this.alturaAtual += this.velocidade;
+            if (this.alturaAtual > this.alturaMaxima) {
+                this.alturaAtual = this.alturaMaxima;
+            }
             return this.velocidade;
         }
         return 0;
     }
 
-    cair(){
-        if (this.alturaAtual >= -this.velocidade){
+    cair() {
+        if (this.alturaAtual > 0) {
             this.alturaAtual -= this.velocidade;
+            if (this.alturaAtual < 0) {
+                this.alturaAtual = 0;
+            }
             return this.velocidade;
         }
         return 0;
