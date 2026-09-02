@@ -1,0 +1,5 @@
+class Tubarao{
+    constructor(){
+        
+    }
+}

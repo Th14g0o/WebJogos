@@ -5,8 +5,29 @@ const estadoJogo = {
     FIM: 3,
 }
 
-class Jogo {
+const imagens = [
+    'sprites/guara/guara-01.png',
+    'sprites/guara/guara-02.png',
+    'sprites/guara/guara-03.png',
+    'sprites/guara/guara-04.png',
+    'sprites/guara/guara-05.png',
+    'sprites/guara/guara-06.png',
+    'sprites/guara/guara-07.png',
+    'sprites/guara/guara-08.png',
+    'sprites/guara/guara-09.png',
+    'sprites/tronco/tronco-menor.png',
+    'sprites/tronco/tronco-medio.png',
+    'sprites/tronco/tronco-grande.png',
+    'sprites/fundo/floresta-entardecer/floresta-entardecer-atras.png',
+    'sprites/fundo/floresta-entardecer/floresta-entardecer-meio.png',
+    'sprites/fundo/floresta-entardecer/floresta-entardecer-frente.png',
+    'sprites/fundo/floresta-entardecer/floresta-entardecer-fundo.png',
+    'sprites/fundo/floresta-entardecer/floresta-entardecer-solo.png',
+];
+
+class Jogo extends IniciarJogo {
     constructor(){
+        super(imagens);
         this.corredor = guara;
         this.pontuacao = new Pontuacao();
         this.vidasConsumidas = 0;
@@ -59,7 +80,7 @@ class Jogo {
                 this.adicionarObstaculo();
             }
 
-            const colidiu = verificarColisao(this.corredor, this.obstaculos[i]);
+            const colidiu = verificarColisaoTag(this.corredor.tag, this.obstaculos[i].tag);
             if (colidiu == true) {
                 this.vidasConsumidas++;
             }
@@ -69,11 +90,13 @@ class Jogo {
                 this.pontuacao.acabouJogo();
                 alert("Game Over! Sua pontuação foi: " + Math.trunc(this.pontuacao.pontos) + "\nMaior pontuação: " + Math.trunc(this.pontuacao.maiorPontuacao));
                 this.reiniciarJogo();
+                break;
             }
         }
     }
 
     comecar(){
+        this.carregarTela();
         this.carregarJogo();
 
         document.addEventListener("keydown", (evento) => {
@@ -93,3 +116,6 @@ class Jogo {
         }, 5);
     }
 }
+
+const jogo = new Jogo();
+jogo.comecar();
