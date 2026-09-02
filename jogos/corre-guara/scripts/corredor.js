@@ -30,25 +30,24 @@ class Pulo{
 }
 
 class Corredor2D extends Sprite2D {
-    constructor(nome){
-        super();
+    constructor(nome, x = 0, y = 0, z = 1, fatorColisaoX = 50, fatorColisaoY = 5){
+        super(x, y, z, fatorColisaoX, fatorColisaoY);
         this.nome = nome;
         this.vidas = 1;
         this.pulo = new Pulo(180, 3);
         this.estado = estadoCorredor.CORRENDO;
-        this.posicaoInicial();
     }
 
     reiniciar(){
-        this.posicaoInicial();
         this.estado = estadoCorredor.CORRENDO;
         this.pulo = new Pulo(180, 3);
         this.vidas = 1;
         this.reiniciarSprite();
+        this.posicaoInicial();
     }
 
     posicaoInicial(){
-        this.posicionar(0, (window.innerHeight - this.altura() * 2) + 'px', 1);
+        this.posicionar(0, (window.innerHeight - this.altura()) + 'px', 1);
     }
 
     pular(){

@@ -1,5 +1,5 @@
 class Sprite2D{
-    constructor(x = 0, y = 0, z = 1){
+    constructor(x = 0, y = 0, z = 1, fatorColisaoX = 0, fatorColisaoY = 0){
         this.spriteSheet = [];
         this.frameAtual = 0;
         this.velocidadeAnima = 0.05;
@@ -7,8 +7,8 @@ class Sprite2D{
         this.tag = document.createElement("img");
         this.prepararExibicao(x, y, z);
 
-        this.fatorColisaoX = 35;
-        this.fatorColisaoY = 0;
+        this.fatorColisaoX = fatorColisaoX;
+        this.fatorColisaoY = fatorColisaoY;
     }
 
     posicao(){
@@ -22,12 +22,11 @@ class Sprite2D{
     }
 
     prepararExibicao(x = null, y = null, z = null){
-        this.tag.style.display = 'block';
-        this.tag.style.width = '100px';
+        this.tag.style.display  = 'block';
         this.tag.style.position = 'absolute';
-        this.tag.style.top = y == null ? '0' : y;
-        this.tag.style.left = x == null ? '0' : x;
-        this.tag.style.zIndex = z == null ? '1' : z;
+        this.tag.style.top      = y == null ? '0' : y;
+        this.tag.style.left     = x == null ? '0' : x;
+        this.tag.style.zIndex   = z == null ? '1' : z;
     }
 
     adicionaSprite(caminho){
@@ -68,7 +67,8 @@ class Sprite2D{
     }
 
     posicionar(x, y, z = 1){
-        this.prepararExibicao(x, y, z = 1)
+        this.tag.src = this.sprite();
+        this.prepararExibicao(x, y, z)
     }
 
     atualizaSprite(){

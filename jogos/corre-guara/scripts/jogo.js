@@ -41,6 +41,7 @@ class Jogo extends IniciarJogo {
         const obstaculo = gerarTroncoAleatorio();
         this.correGuara.appendChild(obstaculo.tag);
         this.obstaculos.push(obstaculo);
+        obstaculo.posicaoInicial();
     }
 
     reiniciarJogo(){
@@ -65,6 +66,7 @@ class Jogo extends IniciarJogo {
         this.correGuara.appendChild(this.corredor.tag);
         this.cenario.adicionarAoPai(this.correGuara);
         this.adicionarObstaculo();
+        this.corredor.posicaoInicial();
     }
 
     jogo(){
@@ -80,16 +82,13 @@ class Jogo extends IniciarJogo {
                 this.adicionarObstaculo();
             }
 
-            const colidiu = verificarColisaoTag(this.corredor.tag, this.obstaculos[i].tag);
+            const colidiu = verificarColisaoSprite2D(this.corredor, this.obstaculos[i]);
             if (colidiu == true) {
                 this.vidasConsumidas++;
             }
 
             if (this.vidasConsumidas >= this.corredor.vidas) {
                 this.estado = estadoJogo.FIM; 
-                this.pontuacao.acabouJogo();
-                alert("Game Over! Sua pontuação foi: " + Math.trunc(this.pontuacao.pontos) + "\nMaior pontuação: " + Math.trunc(this.pontuacao.maiorPontuacao));
-                this.reiniciarJogo();
                 break;
             }
         }
@@ -112,6 +111,11 @@ class Jogo extends IniciarJogo {
         setInterval(() => {
             if (this.estado === estadoJogo.JOGO) {
                 this.jogo();
+            }
+            else if (this.estado === estadoJogo.FIM) {
+                this.pontuacao.acabouJogo();
+                alert("Game Over! Sua pontuação foi: " + Math.trunc(this.pontuacao.pontos) + "\nMaior pontuação: " + Math.trunc(this.pontuacao.maiorPontuacao));
+                this.reiniciarJogo();
             }
         }, 5);
     }
