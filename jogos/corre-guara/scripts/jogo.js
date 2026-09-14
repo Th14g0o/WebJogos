@@ -38,10 +38,10 @@ class Jogo extends IJogo {
 
     async adicionarObstaculo(){
         const obstaculo = gerarTroncoAleatorio();
-        this.tela.appendChild(obstaculo.tag);
+        this.areaJogo.appendChild(obstaculo.tag);
         this.obstaculos.push(obstaculo);
         obstaculo.atualizarImagem();
-         await obstaculo.aguardarImagem();
+        await obstaculo.aguardarImagem();
         obstaculo.posicaoInicial();
     }
 
@@ -58,7 +58,7 @@ class Jogo extends IJogo {
 
         this.corredor.tag.remove();
 
-        this.cenario.removeDoPai(this.tela);
+        this.cenario.removeDoPai(this.areaJogo);
 
         this.corredor.reiniciar();
 
@@ -68,13 +68,13 @@ class Jogo extends IJogo {
     }
 
     carregarJogo(){
-        this.tela.appendChild(this.pontuacao.tag);
+        this.areaJogo.appendChild(this.pontuacao.tag);
 
-        this.tela.appendChild(this.corredor.tag);
+        this.areaJogo.appendChild(this.corredor.tag);
         this.corredor.atualizarImagem();
         this.corredor.posicaoInicial();
 
-        this.cenario.adicionarAoPai(this.tela);
+        this.cenario.adicionarAoPai(this.areaJogo);
 
         this.adicionarObstaculo();
     }
@@ -89,7 +89,7 @@ class Jogo extends IJogo {
             this.obstaculos[i].atualizarEstado();
             
             if (this.obstaculos[i].saiuTela()) {
-                this.tela.removeChild(this.obstaculos[i].tag);
+                this.areaJogo.removeChild(this.obstaculos[i].tag);
                 this.obstaculos.splice(i, 1);
                 this.adicionarObstaculo();
             }

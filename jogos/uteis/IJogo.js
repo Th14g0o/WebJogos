@@ -2,6 +2,7 @@ class IJogo{
     constructor(imgs = []){
         this.imagens = imgs;
         this.tela = document.body;
+        this.areaJogo = document.createElement('main');
     }
 
     adicionarImagem(caminho){
@@ -35,6 +36,13 @@ class IJogo{
         this.tela.style.maxWidth = '100vw';
         this.tela.style.maxHeight = '100vh';
         this.tela.style.boxSizing = 'border-box';
+
+        this.areaJogo.id = 'area-jogo';
+        this.areaJogo.style.position = 'relative';
+        this.areaJogo.style.width = '100%';
+        this.areaJogo.style.height = '100dvh';
+        this.areaJogo.style.overflow = 'hidden';
+        this.tela.appendChild(this.areaJogo);
 
         // For WebKit browsers
         const style = document.createElement('style');
