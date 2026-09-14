@@ -62,7 +62,7 @@ class Jogo extends IJogo {
 
         this.corredor.reiniciar();
 
-        this.pontos = 0;
+        this.pontuacao.pontos = 0;
 
         this.carregarJogo();
 
