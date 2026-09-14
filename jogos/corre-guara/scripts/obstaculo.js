@@ -1,11 +1,10 @@
-class Obstaculo extends Sprite2D {
+class Obstaculo extends ISprite2D {
     constructor(x = 0, y = 0, z = 1, fatorColisaoX = 0, fatorColisaoY = 0) {
         super(x, y, z, fatorColisaoX, fatorColisaoY);
         this.velocidadeMovimento = (Math.floor(Math.random() * 10) % 4 + 3) * 1.5; 
     }    
 
     posicaoInicial(){
-        console.log(this.altura());
         this.posicionar((window.innerWidth + this.largura()) + 'px', (window.innerHeight - this.altura()) + 'px', 1);
     }
 

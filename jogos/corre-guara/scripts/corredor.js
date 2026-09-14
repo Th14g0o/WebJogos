@@ -12,6 +12,10 @@ class Pulo{
         this.alturaAtual = 0;
     }
 
+    resetar(){
+        this.alturaAtual = 0;
+    }
+
     pular() {
         if (this.alturaAtual < this.alturaMaxima) {
             this.alturaAtual += this.velocidade;
@@ -35,18 +39,18 @@ class Pulo{
     }
 }
 
-class Corredor2D extends Sprite2D {
+class Corredor2D extends ISprite2D {
     constructor(nome, x = 0, y = 0, z = 1, fatorColisaoX = 50, fatorColisaoY = 5){
         super(x, y, z, fatorColisaoX, fatorColisaoY);
         this.nome = nome;
         this.vidas = 1;
-        this.pulo = new Pulo(180, 3);
+        this.pulo = new Pulo(250, 5);
         this.estado = estadoCorredor.CORRENDO;
     }
 
     reiniciar(){
         this.estado = estadoCorredor.CORRENDO;
-        this.pulo = new Pulo(180, 3);
+        this.pulo.resetar();
         this.vidas = 1;
         this.reiniciarSprite();
         this.posicaoInicial();
