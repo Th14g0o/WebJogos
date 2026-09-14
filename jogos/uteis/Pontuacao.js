@@ -23,6 +23,5 @@ class Pontuacao {
     acabouJogo(){
         if (this.pontos > this.maiorPontuacao) 
             this.maiorPontuacao = this.pontos;
-        this.pontos = 0;
     }
 }

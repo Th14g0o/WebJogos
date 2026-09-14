@@ -62,6 +62,8 @@ class Jogo extends IJogo {
 
         this.corredor.reiniciar();
 
+        this.pontos = 0;
+
         this.carregarJogo();
 
         this.estado = estadoJogo.JOGO;
