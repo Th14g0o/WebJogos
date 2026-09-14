@@ -6,67 +6,58 @@ const estadoCorredor = {
 }
 
 class Pulo{
-    constructor(alturaMaxima, velocidade){
+    constructor(alturaMaxima, velocidade) {
         this.alturaMaxima = alturaMaxima;
         this.velocidade = velocidade;
-        this.alturaAtual = velocidade;
+        this.alturaAtual = 0;
     }
 
-    pular(){
-        if (this.alturaAtual <= this.alturaMaxima + this.velocidade){
+    resetar(){
+        this.alturaAtual = 0;
+    }
+
+    pular() {
+        if (this.alturaAtual < this.alturaMaxima) {
             this.alturaAtual += this.velocidade;
+            if (this.alturaAtual > this.alturaMaxima) {
+                this.alturaAtual = this.alturaMaxima;
+            }
             return this.velocidade;
         }
         return 0;
     }
 
-    cair(){
-        if (this.alturaAtual >= -this.velocidade){
+    cair() {
+        if (this.alturaAtual > 0) {
             this.alturaAtual -= this.velocidade;
+            if (this.alturaAtual < 0) {
+                this.alturaAtual = 0;
+            }
             return this.velocidade;
         }
         return 0;
     }
 }
 
-class Corredor {
-    constructor(nome){
+class Corredor2D extends ISprite2D {
+    constructor(nome, x = 0, y = 0, z = 1, fatorColisaoX = 50, fatorColisaoY = 5){
+        super(x, y, z, fatorColisaoX, fatorColisaoY);
         this.nome = nome;
-        this.spriteSheet = [];
         this.vidas = 1;
-        this.frameAtual = 0;
-        this.velocidadeAnima = 0.05;
-        
-        this.pulo = new Pulo(180, 3);
-
+        this.pulo = new Pulo(250, 5);
         this.estado = estadoCorredor.CORRENDO;
-
-        this.tag = document.createElement("img");
-        this.prepararExibicao();
-
-        this.posicao = this.tag.getBoundingClientRect();
-
-        this.fatorColisaoX = 35;
-        this.fatorColisaoY = 0;
     }
 
     reiniciar(){
         this.estado = estadoCorredor.CORRENDO;
-        this.tag = document.createElement("img");
-        this.pulo = new Pulo(180, 3);
-        this.prepararExibicao();
-        this.posicao = this.tag.getBoundingClientRect();
+        this.pulo.resetar();
         this.vidas = 1;
-        this.frameAtual = 0;
+        this.reiniciarSprite();
+        this.posicaoInicial();
     }
 
-    prepararExibicao(){
-        this.tag.style.display = 'block';
-        this.tag.style.width = '100px';
-        this.tag.style.position = 'absolute';
-        this.tag.style.bottom = '0';
-        this.tag.style.left = '0';
-        this.tag.style.zIndex = "1";
+    posicaoInicial(){
+        this.posicionar(0, (window.innerHeight - this.altura()) + 'px', 1);
     }
 
     pular(){
@@ -75,45 +66,30 @@ class Corredor {
         }
     }
 
-    adicionaSprite(caminho){
-        this.spriteSheet.push(caminho)
-    }
-    
-    animar(){
-        this.frameAtual = (this.frameAtual + this.velocidadeAnima) % this.spriteSheet.length;
-        this.tag.src = this.sprite(); 
-    }
-
-    sprite(){
-        return this.spriteSheet[Math.trunc(this.frameAtual)];
-    }
-
     atualizarEstado(){
-        this.posicao = this.tag.getBoundingClientRect();
+        this.atualizaSprite();
 
         if (this.estado == estadoCorredor.PULANDO){
             const velocidadePulo = this.pulo.pular();
-            this.tag.style.top = (this.posicao.y - velocidadePulo) + "px";
+            this.movCima(velocidadePulo);
             if (velocidadePulo == 0) {
                 this.estado = estadoCorredor.CAINDO;
             }
         }
         else if (this.estado == estadoCorredor.CAINDO){
             const velocidadePulo = this.pulo.cair();
-            this.tag.style.top = (this.posicao.y + velocidadePulo) + "px";
+            this.movBaixo(velocidadePulo);
             if (velocidadePulo == 0) {
                 this.estado = estadoCorredor.CORRENDO;
             }
         }
-
-        this.animar();
     }
 
 }
 
 // 1. Guara
 const caminhoBaseCorreGuara = 'sprites/guara/'
-let guara = new Corredor('Guará');
+let guara = new Corredor2D('Guará');
 // 1.1 Sprite Correndo
 for (let i = 1; i <= 9; i++){
     guara.adicionaSprite(`${caminhoBaseCorreGuara}guara-0${i.toString()}.png`);
