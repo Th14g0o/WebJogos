@@ -67,10 +67,11 @@ class Jogo extends IJogo {
         this.estado = estadoJogo.JOGO;
     }
 
-    carregarJogo(){
+    async carregarJogo(){
         this.areaJogo.appendChild(this.pontuacao.tag);
 
         this.areaJogo.appendChild(this.corredor.tag);
+        await this.corredor.aguardarImagem();
         this.corredor.atualizarImagem();
         this.corredor.posicaoInicial();
 
