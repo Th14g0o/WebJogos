@@ -1,0 +1,41 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: courier, monospace;
+    font-weight: bold;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent; 
+}
+
+body{
+    background-image: url('../imgs/fundo-inicio.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.marca{
+    display: flex;         
+    justify-content: center; 
+    align-items: center;   
+    min-height: 10vh;      
+    padding-top: 10vh;    
+}
+
+.comecar{
+    display: flex;        
+    justify-content: center; 
+    align-items: center;   
+    height: 30vh;
+    align-content: center;
+}
+
+.botao-comecar{
+    width: 350px; 
+    height: auto; 
+}
+
+.marca-img{
+    width: 350px; 
+    height: auto; 
+}

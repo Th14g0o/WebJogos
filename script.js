@@ -119,7 +119,7 @@ let listaJogos = new ListaJogos();
 
 // Corre guara
 let jogo = new Jogo(1, "Corre Guara", "Runner", "Jogo inspirado no jogo do T-Rex do Google", 
-    "jogos/corre-guara/index.html", "imgs/capas/CorreGuara.png"
+    "jogos/corre-guara/menu.html", "imgs/capas/CorreGuara.png"
 );
 jogo.adicionarAcao(new Acao("Pular", "Barra de espaço, Esquerda do Mouse"));
 listaJogos.adicionarJogo(jogo);
