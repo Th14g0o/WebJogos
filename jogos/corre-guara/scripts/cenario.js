@@ -1,8 +1,10 @@
 const caminhoBaseSprite = 'sprites/fundo/floresta-entardecer/';
 
 class Camada{
-    constructor(caminho, nivel, fator){
-        this.tag = document.createElement('img')
+    constructor(caminho, nivel, fator, altura = '90vh', y = '0'){
+        this.tag = document.createElement('img');
+        this.altura = altura;
+        this.y = y;
         this.imagem = caminho;
         this.nivel = nivel;
         this.posicao = this.tag.getBoundingClientRect();
@@ -13,10 +15,10 @@ class Camada{
 
     prepararExibicao(){
         this.tag.style.display = 'block';
-        this.tag.style.width = '100vw';
-        this.tag.style.height = '90vh';
         this.tag.style.position = 'absolute';
-        this.tag.style.top = '0';
+        this.tag.style.height = this.altura;
+        this.tag.style.top = this.y;
+        this.tag.style.width = '100vw';
         this.tag.style.left =  (100 * this.fatorLeftInicial) + 'vw';
         this.tag.style.zIndex = (this.nivel * -1) + '';
         this.tag.src = this.imagem;
@@ -43,64 +45,61 @@ class Camada{
     }
 }
 
-class Solo{
-    constructor(caminho, fator){
-        this.tag = document.createElement('img')
-        this.imagem = caminho;
-        this.posicao = this.tag.getBoundingClientRect();
-        this.velocidadeMovimento = 3;
-        this.fatorLeftInicial = fator;
-        this.prepararExibicao();
+class Fundo{
+    constructor(caminho, largura, altura, x = '0', y = '0'){
+        this.tag = document.createElement('img');
+        this.caminho = caminho;
+        this.largura = largura;
+        this.altura = altura;
+        this.x = x;
+        this.y = y;
+        this.nivel = 0;
+    }
+
+    getNivel(){
+        return (-1*this.nivel).toString();
+    }
+
+    setNivel(n){
+        this.nivel = n;
+        this.tag.style.zIndex = this.getNivel();
     }
 
     prepararExibicao(){
         this.tag.style.display = 'block';
-        this.tag.style.width = '100vw';
-        this.tag.style.height = '10vh';
         this.tag.style.position = 'absolute';
-        this.tag.style.top = '90vh';
-        this.tag.style.left =  (100 * this.fatorLeftInicial) + 'vw';
-        this.tag.style.zIndex = '0';
-        this.tag.src = this.imagem;
-        this.posicao = this.tag.getBoundingClientRect();
-    }
 
-    moveEsquerda(){
-        this.posicao = this.tag.getBoundingClientRect();
-        this.tag.style.left = (this.posicao.x - this.velocidadeMovimento) + "px";
-    }
+        this.tag.style.top = this.y;
+        this.tag.style.left = this.x;
 
-    atualizarEstado(){
-        this.moveEsquerda();
-        this.posicao = this.tag.getBoundingClientRect();
-    }
-
-    reposicionar(left){
-        this.tag.style.left = left;
-    }
-
-    saiuTela(){
-        this.posicao = this.tag.getBoundingClientRect();
-        return this.posicao.x + this.posicao.width < -this.posicao.width;
+        this.tag.style.width = this.largura;
+        this.tag.style.height = this.altura;
+        this.tag.src = this.caminho; 
+        
+        this.tag.style.zIndex = this.getNivel();
     }
 }
 
 class Cenario{
-    constructor(caminhoFundo){
-        this.tag = document.createElement('img');
-        this.fundo = caminhoFundo;
-        this.camadas = [];
-        this.solos = [];
-        this.prepararExibicao();
+    constructor(){
+        this.fundo = null;
+        this.camadas_fundo = [];
+        this.camadas_solo = [];
+        this.maiorNivel = 0;
+    }
+
+    adicionarFundo(fundo){
+        this.fundo = fundo;
+        this.fundo.prepararExibicao();
     }
 
     adicionarAoPai(tagPai){
         this.resetar();
-        tagPai.appendChild(this.tag);
-        for (let c of this.camadas){
+        if (this.fundo) tagPai.appendChild(this.fundo.tag);
+        for (let c of this.camadas_fundo){
             tagPai.appendChild(c.tag);
         }
-        for (let s of this.solos){
+        for (let s of this.camadas_solo){
             tagPai.appendChild(s.tag);
         }
     }
@@ -108,7 +107,7 @@ class Cenario{
     reposicionarCamada(camada) {
         let maiorX = camada.tag.getBoundingClientRect().x;
 
-        for (let c of this.camadas) {
+        for (let c of this.camadas_fundo) {
             if (c !== camada) {
                 const posicao = c.tag.getBoundingClientRect();
                 if (posicao.x > maiorX && c.nivel === camada.nivel)
@@ -122,10 +121,10 @@ class Cenario{
     reposicionarSolo(solo) {
         let maiorX = solo.tag.getBoundingClientRect().x;
 
-        for (let s of this.solos) {
+        for (let s of this.camadas_solo) {
             if (s !== solo) {
                 const posicao = s.tag.getBoundingClientRect();
-                if (posicao.x > maiorX) 
+                if (posicao.x > maiorX && s.nivel === solo.nivel)
                     maiorX = posicao.x;
             }
         }
@@ -134,57 +133,47 @@ class Cenario{
     }
 
     removeDoPai(tagPai){
-        tagPai.removeChild(this.tag);
-        for (let c of this.camadas){
+        if (this.fundo) tagPai.removeChild(this.fundo.tag);
+        for (let c of this.camadas_fundo){
             tagPai.removeChild(c.tag);
         }
-        for (let s of this.solos){
+        for (let s of this.camadas_solo){
             tagPai.removeChild(s.tag);
         }
     }
 
-    prepararExibicao(){
-        this.tag.style.display = 'block';
-        this.tag.style.width = '100vw';
-        this.tag.style.height = '90vh';
-        this.tag.style.position = 'absolute';
-        this.tag.style.top = '0';
-        this.tag.style.left = '0';
-        this.tag.src = this.fundo;
-    }
-
-    maiorNivel(){
-        if (this.camadas.length > 0){
-            let maior = this.camadas[0].nivel;
-            for (let c of this.camadas){
-                if (c.nivel > maior) maior = c.nivel;
-            }
-            return maior;
-        }
-        return 0;
-    }
-
     adicionarCamada(camada){
-        this.camadas.push(camada);
-        this.tag.style.zIndex = (this.maiorNivel() + 1) * -1 + '';
+        this.camadas_fundo.push(camada);
+        if (camada && camada.nivel > this.maiorNivel) {
+            this.maiorNivel = camada.nivel;
+            if (this.fundo) this.fundo.setNivel(this.maiorNivel);
+        }
     }
 
     adicionarSolo(solo){
-        this.solos.push(solo);
+        this.camadas_solo.push(solo);
+        if (solo && solo.nivel > this.maiorNivel) {
+            this.maiorNivel = solo.nivel;
+            if (this.fundo) this.fundo.setNivel(this.maiorNivel);
+        }
     }
 
     resetar(){
-        for (let c of this.camadas){
+        if (this.fundo) this.fundo.prepararExibicao();
+        for (let c of this.camadas_fundo){
             c.prepararExibicao();
+        }
+        for (let s of this.camadas_solo){
+            s.prepararExibicao();
         }
     }
 
     atualizarEstado(){
-        for (let c of this.camadas){
+        for (let c of this.camadas_fundo){
             c.atualizarEstado();
             if (c.saiuTela()) this.reposicionarCamada(c);
         }
-        for (let s of this.solos){
+        for (let s of this.camadas_solo){
             s.atualizarEstado();
             if (s.saiuTela()) this.reposicionarSolo(s);
         }
@@ -192,7 +181,11 @@ class Cenario{
 }
 
 function criarCenarioFlorestaEntardecer(){
-    florestaEntardecer = new Cenario(caminhoBaseSprite + 'floresta-entardecer-fundo.png');
+    florestaEntardecer = new Cenario();
+
+    const fundo = new Fundo(caminhoBaseSprite + 'floresta-entardecer-fundo.png', '100vw', '90vh');
+
+    florestaEntardecer.adicionarFundo(fundo);
 
     florestaEntardecerCamada1 = new Camada(caminhoBaseSprite + 'floresta-entardecer-atras.png', 3, 0);
     florestaEntardecerCamada2 = new Camada(caminhoBaseSprite + 'floresta-entardecer-atras.png', 3, 1);
@@ -217,9 +210,9 @@ function criarCenarioFlorestaEntardecer(){
     florestaEntardecer.adicionarCamada(florestaEntardecerCamada9);
 
 
-    florestaEntardecerSolo1 = new Solo(caminhoBaseSprite + 'floresta-entardecer-solo.png', 0);
-    florestaEntardecerSolo2 = new Solo(caminhoBaseSprite + 'floresta-entardecer-solo.png', 1);
-    florestaEntardecerSolo3 = new Solo(caminhoBaseSprite + 'floresta-entardecer-solo.png', 2);
+    florestaEntardecerSolo1 = new Camada(caminhoBaseSprite + 'floresta-entardecer-solo.png', 1, 0, '10vh', '90vh');
+    florestaEntardecerSolo2 = new Camada(caminhoBaseSprite + 'floresta-entardecer-solo.png', 1, 1, '10vh', '90vh');
+    florestaEntardecerSolo3 = new Camada(caminhoBaseSprite + 'floresta-entardecer-solo.png', 1, 2, '10vh', '90vh');
 
     florestaEntardecer.adicionarSolo(florestaEntardecerSolo1);
     florestaEntardecer.adicionarSolo(florestaEntardecerSolo2);

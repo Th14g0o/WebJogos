@@ -9,10 +9,19 @@ class ISprite2D{
 
         this.fatorColisaoX = fatorColisaoX;
         this.fatorColisaoY = fatorColisaoY;
+
+        this.alturaImg = null;
+        this.larguraImg = null;
+    }
+
+    setTam(largura, altura){
+        this.alturaImg = altura;
+        this.larguraImg = largura;
+        this.prepararExibicao();
     }
 
     posicao(){
-        return this.tag.getBoundingClientRect();;
+        return this.tag.getBoundingClientRect();
     }
 
     reiniciarSprite(){ 
@@ -22,17 +31,18 @@ class ISprite2D{
         this.prepararExibicao();
     }
 
-    prepararExibicao(x = null, y = null, z = null){
+    prepararExibicao(){
+        if (this.largura != null) 
+            this.tag.style.width = this.larguraImg;
+        if (this.altura != null) 
+            this.tag.style.height = this.alturaImg;
         this.tag.style.display  = 'block';
         this.tag.style.position = 'absolute';
-        this.tag.style.top      = y == null ? '0' : y;
-        this.tag.style.left     = x == null ? '0' : x;
-        this.tag.style.zIndex   = z == null ? '1' : z;
-        this.atualizarImagem()
+        this.atualizarImagem();
     }
 
     adicionaSprite(caminho){
-        this.spriteSheet.push(caminho)
+        this.spriteSheet.push(caminho);
     }
 
     atualizarImagem(){
@@ -88,7 +98,10 @@ class ISprite2D{
 
     posicionar(x, y, z = 1){
         this.tag.src = this.sprite();
-        this.prepararExibicao(x, y, z)
+        this.prepararExibicao();
+        this.tag.style.top = y == null ? '0' : y;
+        this.tag.style.left = x == null ? '0' : x;
+        this.tag.style.zIndex = z == null ? '1' : z;
     }
 
     atualizaSprite(){
